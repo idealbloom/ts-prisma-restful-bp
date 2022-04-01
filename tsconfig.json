@@ -1,9 +1,16 @@
 {
     "compilerOptions": {
-        "sourceMap": true,
-        "outDir": "dist",
-        "strict": true,
-        "lib": ["esnext"],
-        "esModuleInterop": true
-    }
+        "target": "es6",  // 어떤 버전으로 컴파일할지 작성 
+        "module": "commonjs", //어떤 모듈 방식으로 컴파일할지 설정
+        "outDir": "dist", //컴파일 후 js 파일들이 생성되는 곳
+        // "sourceMap": true,
+        // "rootDir": ".", //루트 폴더
+        // "strict": true, //strict 옵션 활성화
+        // "moduleResolution":"node", //모듈 해석 방법 설정: 'node' (Node.js)
+        // "lib": ["esnext"],
+        "esModuleInterop": true, //esModuleInterop 속성이 true로 설정될 경우, ES6 모듈 사양을 준수하여 CommonJS 모듈을 가져올 수 있게 됩니다.
+        // "jsx":"react"
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules"],
 }
