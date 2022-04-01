@@ -9,14 +9,21 @@
     "start:dev": "pm2 start ecosystem.config.js --env development",
     "start:prod": "pm2 start ecosystem.config.js --env production",
     "start": "yarn start:dev",
-    "stop": "pm2 delete $(exec yarn pm2 list | awk '/myApi/ {print $2}')",
+    "stop": "pm2 delete $(exec pm2 list | awk '/myApi/ {print $2}')",
     "restart": "yarn stop; yarn start",
+    "eslint":"eslint --ext .js,.ts src",
     "build": "tsc -p ."
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
     "@types/node": "^17.0.23",
-    "express": "^4.17.3",
+    "@typescript-eslint/eslint-plugin": "^5.17.0",
+    "@typescript-eslint/parser": "^5.17.0",
+    "eslint": "^8.2.0",
+    "eslint-config-airbnb-base": "15.0.0",
+    "eslint-plugin-import": "^2.25.2",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.7",
     "pm2": "^5.2.0",
     "prisma": "^3.11.1",
     "ts-node": "^10.7.0",
@@ -24,6 +31,7 @@
     "typescript": "^4.6.3"
   },
   "dependencies": {
-    "@prisma/client": "3.11.1"
+    "@prisma/client": "3.11.1",
+    "express": "^4.17.3"
   }
 }
