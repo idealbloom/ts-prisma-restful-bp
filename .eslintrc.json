@@ -6,6 +6,16 @@
   "env": {
     "node": true
   },
+  "rules":{
+    "import/extensions": ["error", "never"],
+    // "import/no-unresolved": 0
+    "no-console": "off"
+  },
+  "settings":{
+    "import/resolver": {
+      "typescript":{} // this loads <rootdir>/tsconfig.json to eslint
+    }
+  },
   "plugins":["@typescript-eslint", "prettier"],
   "extends": [
     // Airbnb style guide 적용

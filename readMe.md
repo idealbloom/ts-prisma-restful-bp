@@ -3,7 +3,7 @@
 현재 기준으로 기본적으로 세팅되어 있는 상태는 다음과 같습니다.
 
 - typescript
-- ts eslint (airbnb-base룰) + prettier
+- ts eslint (TypeScript ESLint recommanded style) + prettier
 - MySQL docker-compose
 - ts prisma
 - ts express restful API Server (pm2)
