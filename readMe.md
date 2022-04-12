@@ -26,7 +26,7 @@ ce43b2497247   mysql     "docker-entrypoint.s…"   10 days ago    Up 10 days   
 - .env
 - /config/xxx.json
 
-.env에는 기본적으로 아래 변수들이 필요하다.<br> DATABASE_URL <br> SHADOW_DATABASE_URL
+.env에는 기본적으로 아래 변수들이 필요합니다.<br> DATABASE_URL <br> SHADOW_DATABASE_URL
 
 > ex) <br>DATABASE_URL="mysql://idealbloom:idealbloom1@localhost:3322/myApi?schema=public" SHADOW_DATABASE_URL="mysql://idealbloom:idealbloom1@localhost:3322/shadowdb"
 
@@ -41,6 +41,14 @@ $ yarn start default dev 모드 실행(= yarn start:dev)
 ```shell
 $ yarn restart
 $ yarn stop
+```
+
+# git 명령어
+
+본 boiler-plate에는 husky 설정이 포함되어 있어서 eslint 에러가 있을 경우 commit 이 되지 않습니다. 강제로 커밋을 원한다면 아래의 명령어를 이용해주세요
+
+```shell
+$ git commit --no-verify
 ```
 
 # Semantic Commit Messages Rule

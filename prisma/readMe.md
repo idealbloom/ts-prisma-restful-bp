@@ -41,7 +41,7 @@ $ yarn generate  // (= npx prisma generate)
 
 ### DB 마이그레이션 롤백하기
 
-기본적으로 prisma에서는 DB 마이그레이션 rollback(undo) 기능을 지원하지 않는다. ([참조글](https://github.com/prisma/prisma/discussions/4617)) 때문에 롤백을 위해서는 /migrations 디렉토리중에서 롤백하고자 하는 마이그레이션을 직접 삭제하고 reset를 해야한다.
+기본적으로 prisma에서는 DB 마이그레이션 rollback(undo) 기능을 지원하지 않는다. ([참조글](https://github.com/prisma/prisma/discussions/4617)) <br>때문에 롤백을 위해서는 /migrations 디렉토리중에서 롤백하고자 하는 마이그레이션을 직접 삭제하고 reset를 해야한다.
 
 ```
 // /migrations 디렉토리에서 롤백하고자 하는 마이그레이션을 삭제한후 아래 명령어 실행

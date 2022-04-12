@@ -1,9 +1,11 @@
 import express, { Request, Response } from 'express';
 import testRouter from './routes/test';
+import authRouter from './routes/auth';
 
 const app: express.Application = express();
 
 app.use('/test', testRouter);
+app.use('/auth', authRouter);
 
 app.get('/', (req: Request, res: Response) => {
   res.send('hello world!!!');
