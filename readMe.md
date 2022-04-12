@@ -13,7 +13,7 @@
 
 ### 1. MySQL docker setting
 
-```
+```shell
 $ docker-compose up -d
 $ docker ps // 확인
 
@@ -25,6 +25,10 @@ ce43b2497247   mysql     "docker-entrypoint.s…"   10 days ago    Up 10 days   
 
 - .env
 - /config/xxx.json
+
+.env에는 기본적으로 아래 변수들이 필요하다.<br> DATABASE_URL <br> SHADOW_DATABASE_URL
+
+> ex) <br>DATABASE_URL="mysql://idealbloom:idealbloom1@localhost:3322/myApi?schema=public" SHADOW_DATABASE_URL="mysql://idealbloom:idealbloom1@localhost:3322/shadowdb"
 
 ### 3. 서버실행
 
