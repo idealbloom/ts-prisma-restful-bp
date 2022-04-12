@@ -15,7 +15,7 @@
     "format": "prettier --write \"src/**/*.{ts,tsx,js, json,html}\"",
     "build": "tsc -p .",
     "prepare": "husky install",
-    "migrate":"prisma migrate",
+    "migrate":"prisma migrate dev",
     "generate" :"prisma generate"
   },
   "husky": {
