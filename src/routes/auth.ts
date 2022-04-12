@@ -2,10 +2,14 @@ import express, { Request, Response } from 'express';
 
 const testRouter: express.Application = express();
 
-export const signIns = async (req: Request, res: Response) => {
+export const signIn = async (req: Request, res: Response) => {
   res.json('this is signIn');
 };
 
-testRouter.post('/signIn', signIns);
+export const signUp = async (req: Request, res: Response) => {
+  res.json('this is signUp');
+};
+
+testRouter.post('/signIn', signIn);
 
 export default testRouter;
