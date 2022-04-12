@@ -43,6 +43,9 @@ $ yarn restart
 $ yarn stop
 ```
 
+<br>
+<br>
+
 # git 명령어
 
 본 boiler-plate에는 husky 설정이 포함되어 있어서 eslint 에러가 있을 경우 commit 이 되지 않습니다. 강제로 커밋을 원한다면 아래의 명령어를 이용해주세요
@@ -50,6 +53,9 @@ $ yarn stop
 ```shell
 $ git commit --no-verify
 ```
+
+<br>
+<br>
 
 # Semantic Commit Messages Rule
 
@@ -85,3 +91,52 @@ References:
 - https://www.conventionalcommits.org/
 - https://seesparkbox.com/foundry/semantic_commit_messages
 - http://karma-runner.github.io/1.0/dev/git-commit-msg.html
+
+<br>
+<br>
+
+# Troubleshooting
+
+### prisma shadowdb 생성 오류
+
+현재 구성되어 있는 docker-compose.yml 을 통해 도커 mysql을 구성하였다면 문제가 없을 것입니다.
+
+그러나 서버에 MySQL을 직접 구성하는 경우는 아래와 같은 shadowdb 문제에 직면할수 있습니다.
+
+prisma 에서 migrate 명령 등을 실행하면 shadowdb라는 데이터베이스를 생성하고 <br> 이와 실제 서비스 데이터 베이스간 비교를 통해 draft change 등의 체크를 하는데 사용됩니다. ((참조글)[https://www.prisma.io/docs/concepts/components/prisma-migrate/shadow-database])
+
+최초 `prisma migrate dev` 명령을 실행하여 schema의 내용을 DB에 구성하려고 하면 문제가 발생할 것입니다.
+
+```
+(base)  ✘ hjkang  ~/Documents/idealbloom/ts-prisma-boilerplate   main ±✚  yarn migrate
+yarn run v1.22.11
+$ prisma migrate dev
+Environment variables loaded from .env
+Prisma schema loaded from src/prisma/schema.prisma
+Datasource "db": MySQL database "myApi", schema "public" SHADOW_DATABASE_URL="mysql://idealbloom:idealbloom1@localhost:3322/shadowdb" at "localhost:3322"
+
+Error: P3014
+
+Prisma Migrate could not create the shadow database. Please make sure the database user has permission to create databases. Read more about the shadow database (and workarounds) at https://pris.ly/d/migrate-shadow
+
+Original error: Error code: P1010
+
+User `idealbloom` was denied access on the database `myApi`
+
+error Command failed with exit code 1.
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+```
+
+이것은 docker-compose에서 기본 생성을 세팅한 계정인 idealbloom 의 db 생성 권한이 없기 때문입니다. 수작업으로 shadowdb를 생성하고 prisma가 접근할 계정에 접근 및 권한을 제공하면 됩니다.
+
+mysql 커맨드 창 또는 Dbeaver와 같은 DB 툴의 커맨드 창에서 아래 SQL 문을 실행해주면 됩니다. 당연히 권한을 주기 위해서는 root계정의 권한이 필요할 것입니다.
+
+```sql
+# create databases
+CREATE DATABASE IF NOT EXISTS `shadowdb`;
+
+# create root user and grant rights
+-- CREATE USER 'root'@'localhost' IDENTIFIED BY 'local';
+GRANT ALL PRIVILEGES ON shadowdb.* TO 'idealbloom'@'%';
+FLUSH privileges;
+```

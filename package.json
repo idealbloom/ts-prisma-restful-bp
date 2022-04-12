@@ -15,8 +15,8 @@
     "format": "prettier --write \"src/**/*.{ts,tsx,js, json,html}\"",
     "build": "tsc -p .",
     "prepare": "husky install",
-    "migrate":"prisma migrate dev",
-    "generate" :"prisma generate"
+    "migrate": "prisma migrate dev",
+    "generate": "prisma generate"
   },
   "husky": {
     "hooks": {
@@ -29,11 +29,16 @@
       "npm run format"
     ]
   },
+  "prisma":{
+    "schema": "./src/prisma/schema.prisma"
+  },
   "devDependencies": {
     "@types/express": "^4.17.13",
+    "@types/lodash": "^4.14.181",
     "@types/node": "^17.0.23",
     "@typescript-eslint/eslint-plugin": "^5.17.0",
     "@typescript-eslint/parser": "^5.17.0",
+    "bcrypt": "^5.0.1",
     "eslint": "^8.2.0",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-config-prettier": "^8.5.0",
@@ -50,7 +55,13 @@
   },
   "dependencies": {
     "@prisma/client": "3.11.1",
+    "@types/bcrypt": "^5.0.0",
+    "@types/passport": "^1.0.7",
+    "@types/passport-local": "^1.0.34",
     "eslint-import-resolver-typescript": "^2.7.1",
-    "express": "^4.17.3"
+    "express": "^4.17.3",
+    "lodash": "^4.17.21",
+    "passport": "^0.5.2",
+    "passport-local": "^1.0.0"
   }
 }

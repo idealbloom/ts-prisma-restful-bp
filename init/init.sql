@@ -4,3 +4,4 @@ CREATE DATABASE IF NOT EXISTS `shadowdb`;
 # create root user and grant rights
 -- CREATE USER 'root'@'localhost' IDENTIFIED BY 'local';
 GRANT ALL PRIVILEGES ON shadowdb.* TO 'idealbloom'@'%';
+FLUSH privileges;
