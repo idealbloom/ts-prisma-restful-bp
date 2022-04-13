@@ -6,8 +6,9 @@ module.exports = {
         time: true,
         watch: true,
         // TZ: 'Asia/Seoul',
-        restart_delay: 5000,
+        // restart_delay: 5000,
         max_restarts: 5,
+        min_uptime: 5000,
         instance_var: 'INSTANCE_ID',
         env: {
           "PORT": 3000,
