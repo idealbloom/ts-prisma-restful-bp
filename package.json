@@ -57,8 +57,10 @@
   "dependencies": {
     "@prisma/client": "3.11.1",
     "@types/bcrypt": "^5.0.0",
+    "@types/cookie-parser": "^1.4.2",
     "@types/passport": "^1.0.7",
     "@types/passport-local": "^1.0.34",
+    "cookie-parser": "^1.4.6",
     "eslint-import-resolver-typescript": "^2.7.1",
     "express": "^4.17.3",
     "lodash": "^4.17.21",

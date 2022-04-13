@@ -1,8 +1,13 @@
 import express, { Request, Response } from 'express';
+import cookieParser from 'cookie-parser';
 import testRouter from './routes/test';
 import authRouter from './routes/auth';
 
 const app: express.Application = express();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser(process.env.COOKIE_SECRET || 'default_cookie_secret_16'));
 
 app.use('/test', testRouter);
 app.use('/auth', authRouter);

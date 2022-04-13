@@ -4,7 +4,7 @@ import { ibDefs, IBDefFormat } from '@src/utils';
 // import { isEmpty, isEqual } from 'lodash';
 // import bcrypt from 'bcrypt';
 
-const testRouter: express.Application = express();
+const authRouter: express.Application = express();
 
 // class IBError extends Error {
 //   message: keyof IBErrorsFormat;
@@ -26,7 +26,7 @@ interface ISignUpRequest {
   authNo: String;
 }
 
-export function signUp(req: Request, res: Response) {
+export const signUp = (req: Request, res: Response) => {
   const { email, password, authNo }: ISignUpRequest =
     req.body as ISignUpRequest;
   const result: IBDefFormat = {
@@ -39,6 +39,9 @@ export function signUp(req: Request, res: Response) {
   };
 
   res.json(result);
-}
+};
 
-export default testRouter;
+authRouter.post('/signIn', signIn);
+authRouter.post('/signUp', signUp);
+
+export default authRouter;
