@@ -1,8 +1,31 @@
-// version 0.1.2 2021-12-28: accessToken => token으로 명칭 변경
-// version 0.1.3 2022-01-04: INVALIDSTATUS 추가
-import prisma from '../prisma';
+export interface IBDefFormat {
+  IBcode: string;
+  IBmessage: string;
+  IBdetail: string;
+  IBparams: any;
+}
 
-const IBErrors = {
+export interface IBDefsFormat {
+  SUCCESS: IBDefFormat;
+  TOKENEXPIRED: IBDefFormat;
+  JWTERROR: IBDefFormat;
+  NOAUTHTOKEN: IBDefFormat;
+  TOKENNOTEXPIRED: IBDefFormat;
+  NOTREFRESHTOKEN: IBDefFormat;
+  NOTAUTHORIZED: IBDefFormat;
+  KAKAOTOKENERROR: IBDefFormat;
+  DBTRANSACTIONERROR: IBDefFormat;
+  NOTEXISTDATA: IBDefFormat;
+  NOTMATCHEDDATA: IBDefFormat;
+  DUPLICATEDDATA: IBDefFormat;
+  EXPIREDDATA: IBDefFormat;
+  INVALIDSTATUS: IBDefFormat;
+  INVALIDPARAMS: IBDefFormat;
+  UNEXPECTED: IBDefFormat;
+  EXTERNALAPI: IBDefFormat;
+}
+
+export const ibDefs: IBDefsFormat = {
   SUCCESS: {
     IBcode: '1000',
     IBmessage: 'Success',
@@ -107,9 +130,4 @@ const IBErrors = {
     IBdetail: '',
     IBparams: {},
   },
-};
-
-export default {
-  IBErrors,
-  prisma,
 };

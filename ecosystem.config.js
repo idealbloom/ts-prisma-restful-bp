@@ -2,7 +2,7 @@ module.exports = {
     apps: [
       {
         name: 'myApi',
-        script: 'ts-node ./src/app.ts --watch',
+        script: 'ts-node -r tsconfig-paths/register ./src/app.ts --watch',
         time: true,
         watch: true,
         // TZ: 'Asia/Seoul',

@@ -1,6 +1,3 @@
-import { IBErrors } from './IBDefinitions';
+import { ibDefs, IBDefsFormat, IBDefFormat } from './IBDefinitions';
 
-export default {
-  IBErrors,
-  prisma,
-};
+export { ibDefs, IBDefsFormat, IBDefFormat };

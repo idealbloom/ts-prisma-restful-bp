@@ -7,15 +7,22 @@ import prisma from '../prisma';
 
 const LocalStrategy = passportLocal.Strategy;
 
-export default async (passport: PassportStatic) => {
+export default (passport: PassportStatic) => {
   const local = new LocalStrategy(
     {
       usernameField: 'email',
       passwordField: 'password',
     },
-    async (email, password, done) => {
+    async (email, password, done): Promise => {
       try {
-        const user = await prisma.user.findFirst({
+        const user: {
+          id: number;
+          email: String;
+          password: String;
+          name: String;
+          createdAt: Date;
+          updatedAt: Date;
+        } = await prisma.user.findFirst({
           where: {
             email,
           },
@@ -24,7 +31,10 @@ export default async (passport: PassportStatic) => {
         if (isEmpty(user) || isNull(user)) {
           return done(null, false, { message: 'Incorrect username.' });
         }
-        const compareResult = await bcrypt.compare(password, user.pw);
+        const compareResult: Boolean = await bcrypt.compare(
+          password,
+          user.password,
+        );
         if (!compareResult) {
           return done(null, false, {
             message: 'Incorrect password.',
