@@ -2,7 +2,7 @@ export interface IBDefFormat {
   IBcode: string;
   IBmessage: string;
   IBdetail: string;
-  IBparams: any;
+  IBparams: object;
 }
 
 export interface IBDefsFormat {
