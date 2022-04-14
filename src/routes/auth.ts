@@ -1,6 +1,6 @@
-import express, { NextFunction, Request, Response } from 'express';
+import express, { Request, Response } from 'express';
 import prisma from '@src/prisma';
-import { ibDefs, IBDefFormat } from '@src/utils';
+import { ibDefs, IBDefFormat, asyncWrapper } from '@src/utils';
 import _ from 'lodash';
 
 // import bcrypt from 'bcrypt';
@@ -26,17 +26,6 @@ interface ISignUpRequest {
   password: string;
   authNo: string;
 }
-
-type AsyncFn = (req: Request, res: Response) => Promise<void>;
-const asyncWrapper = (asyncFn: AsyncFn) => {
-  return (req: Request, res: Response, next: NextFunction) => {
-    try {
-      asyncFn(req, res).catch(next);
-    } catch (e) {
-      next(e);
-    }
-  };
-};
 
 export const signUp = asyncWrapper(async (req: Request, res: Response) => {
   const { email, password }: ISignUpRequest = req.body as ISignUpRequest;
