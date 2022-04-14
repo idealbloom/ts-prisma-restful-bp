@@ -17,7 +17,7 @@ const authRouter: express.Application = express();
 //   }
 // }
 
-export const signIn = (req: Request, res: Response) => {
+export const signIn = (req: Request, res: Response): void => {
   res.json('this is signIn');
 };
 

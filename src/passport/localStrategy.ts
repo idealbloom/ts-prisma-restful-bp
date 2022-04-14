@@ -6,7 +6,7 @@ import prisma from '../prisma';
 
 const LocalStrategy = passportLocal.Strategy;
 
-export default (passport: PassportStatic) => {
+export default (passport: PassportStatic): void => {
   const local = new LocalStrategy(
     {
       usernameField: 'email',

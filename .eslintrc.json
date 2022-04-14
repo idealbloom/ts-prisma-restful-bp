@@ -9,7 +9,14 @@
   "rules":{
     "import/extensions": ["error", "never"],
     "import/no-unresolved": "error",
-    "no-console": "off"
+    "no-console": "off",
+    "no-extra-boolean-cast": 1,
+    "@typescript-eslint/restrict-plus-operands": 1,
+    "@typescript-eslint/explicit-module-boundary-types": 1,
+    "@typescript-eslint/no-explicit-any": 1,
+    "@typescript-eslint/no-floating-promises": 1,
+    "@typescript-eslint/no-unsafe-member-access": 1,
+    "@typescript-eslint/no-unsafe-assignment": 1
   },
   // "baseUrl":"./src",
   "settings":{
