@@ -8,7 +8,7 @@
             "@src/*": ["src/*"],
         },
         // "strict": true,                           /* Enable all strict type-checking options. */
-        "typeRoots": ["./node_modules/@types"], /* List of folders to include type definitions from. */
+        "typeRoots": [ "./src/@types/", "./node_modules/@types"], /* List of folders to include type definitions from. */
         // "sourceMap": true,                     /* Generates corresponding '.map' file. */
         // "rootDir": ".", //루트 폴더
         // "strict": true, //strict 옵션 활성화

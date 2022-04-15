@@ -1,31 +1,63 @@
-export interface IBDefFormat {
+export class IBError extends Error {
+  message: keyof IBResFormats;
+
+  constructor(message: keyof IBResFormats) {
+    super(message);
+    this.name = 'IBError';
+    this.message = message;
+  }
+}
+
+export interface IBResFormat {
   IBcode: string;
   IBmessage: string;
   IBdetail: string;
   IBparams: object;
 }
 
-export interface IBDefsFormat {
-  SUCCESS: IBDefFormat;
-  TOKENEXPIRED: IBDefFormat;
-  JWTERROR: IBDefFormat;
-  NOAUTHTOKEN: IBDefFormat;
-  TOKENNOTEXPIRED: IBDefFormat;
-  NOTREFRESHTOKEN: IBDefFormat;
-  NOTAUTHORIZED: IBDefFormat;
-  KAKAOTOKENERROR: IBDefFormat;
-  DBTRANSACTIONERROR: IBDefFormat;
-  NOTEXISTDATA: IBDefFormat;
-  NOTMATCHEDDATA: IBDefFormat;
-  DUPLICATEDDATA: IBDefFormat;
-  EXPIREDDATA: IBDefFormat;
-  INVALIDSTATUS: IBDefFormat;
-  INVALIDPARAMS: IBDefFormat;
-  UNEXPECTED: IBDefFormat;
-  EXTERNALAPI: IBDefFormat;
+// # 성공
+// 200 : OK, 요청 정상 처리
+// 201 : Created, 생성 요청 성공
+// 202 : Accepted, 비동기 요청 성공
+// 204 : No Content, 요청 정상 처리, 응답 데이터 없음.
+// # 실패
+// 400 : Bad Request, 요청이 부적절 할 때, 유효성 검증 실패, 필수 값 누락 등.
+// 401 : Unauthorized, 인증 실패, 로그인하지 않은 사용자 또는 권한 없는 사용자 처리
+// 402 : Payment Required
+// 403 : Forbidden, 인증 성공 그러나 자원에 대한 권한 없음. 삭제, 수정시 권한 없음.
+// 404 : Not Found, 요청한 URI에 대한 리소스 없을 때 사용.
+// 405 : Method Not Allowed, 사용 불가능한 Method를 이용한 경우.
+// 406 : Not Acceptable, 요청된 리소스의 미디어 타입을 제공하지 못할 때 사용.
+// 408 : Request Timeout
+// 409 : Conflict, 리소스 상태에 위반되는 행위 시 사용.
+// 413 : Payload Too Large
+// 423 : Locked
+// 428 : Precondition Required
+// 429 : Too Many Requests
+//
+// 500 : 서버 에러
+
+export interface IBResFormats {
+  SUCCESS: IBResFormat; // http error 200
+  TOKENEXPIRED: IBResFormat; // 401
+  JWTERROR: IBResFormat; // 401
+  NOAUTHTOKEN: IBResFormat; // 401
+  TOKENNOTEXPIRED: IBResFormat; // 401
+  NOTREFRESHTOKEN: IBResFormat; // 401
+  NOTAUTHORIZED: IBResFormat; // 403
+  KAKAOTOKENERROR: IBResFormat; // 401
+  DBTRANSACTIONERROR: IBResFormat; // 500
+  NOTEXISTDATA: IBResFormat; // 404, 기존에 정의되지 않은 데이터 응답을 요청함. 클라이언트 요청 오류
+  NOTMATCHEDDATA: IBResFormat; // 204, 서버가 정상적으로 요청을 수신했으나 DB가 존재하지 않는 정상상황이다.
+  DUPLICATEDDATA: IBResFormat; // 409
+  EXPIREDDATA: IBResFormat; // 400
+  INVALIDSTATUS: IBResFormat; // 400
+  INVALIDPARAMS: IBResFormat; // 400
+  UNEXPECTED: IBResFormat; // 500
+  EXTERNALAPI: IBResFormat; // 500
 }
 
-export const ibDefs: IBDefsFormat = {
+export const ibDefs: IBResFormats = {
   SUCCESS: {
     IBcode: '1000',
     IBmessage: 'Success',

@@ -1,4 +1,12 @@
-import { ibDefs, IBDefsFormat, IBDefFormat } from './IBDefinitions';
+import { ibDefs, IBResFormats, IBResFormat, IBError } from './IBDefinitions';
 import asyncWrapper from './asyncWrapper';
+import somethingHandler from './middlewares/somethingHandler';
 
-export { ibDefs, IBDefsFormat, IBDefFormat, asyncWrapper };
+export {
+  ibDefs,
+  IBResFormats,
+  IBResFormat,
+  asyncWrapper,
+  IBError,
+  somethingHandler,
+};
