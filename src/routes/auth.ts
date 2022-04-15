@@ -1,9 +1,7 @@
 import express, { Request, Response } from 'express';
 import prisma from '@src/prisma';
-import { ibDefs, asyncWrapper } from '@src/utils';
+import { ibDefs, asyncWrapper, genBcryptHash } from '@src/utils';
 import _, { isEmpty } from 'lodash';
-
-import bcrypt from 'bcrypt';
 
 const authRouter: express.Application = express();
 
@@ -29,10 +27,7 @@ export const signUp = asyncWrapper(async (req: Request, res: Response) => {
     return;
   }
 
-  const saltRounds = 10;
-  const salt = bcrypt.genSaltSync(saltRounds);
-  const hash = bcrypt.hashSync(password, salt);
-
+  const hash = genBcryptHash(password);
   const createdUser = await prisma.user.upsert({
     where: {
       email,
