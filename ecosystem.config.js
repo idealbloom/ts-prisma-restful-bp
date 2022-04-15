@@ -1,7 +1,7 @@
 module.exports = {
     apps: [
       {
-        name: 'myApi',
+        name: 'ts-prisma-restful-bp',
         script: 'ts-node -r tsconfig-paths/register ./src/app.ts --watch',
         time: true,
         watch: true,
