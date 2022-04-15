@@ -51,20 +51,27 @@ export const signUp = asyncWrapper(async (req: Request, res: Response) => {
     ...ibDefs.SUCCESS,
     IBparams: userWithoutPw,
   });
-
-  /**
-   * 라우터 컨트롤러를 복수개 유지할 경우
-   * 다음 컨트롤러 함수로 변수를 넘길때 이용은 아래와 같이
-   * req 의 프로퍼티를 만들어 넘기는 것으로 한다.
-   * req.locals = {
-   *    resMessages: {
-   *    ...ibDefs.SUCCESS,
-   *    IBparams: userWithoutPw,
-   *  },
-   * };
-   * next();
-   */
 });
+
+// export const somethingFunc = asyncWrapper(
+//   async (req: Request, res: Response, next: NextFunction) => {
+//     /**
+//      * do some async works in somethingFunc
+//      */
+//     /*
+//      * somethingFunc-somethingHandler 예제와 같이 라우터 컨트롤러를 복수개 유지할 경우
+//      * 다음 컨트롤러 함수로 변수를 넘길때 이용은 아래와 같이
+//      * req 의 프로퍼티를 만들어 넘기는 것으로 한다.
+//      * req.locals = {
+//      *    resMessages: {
+//      *    ...ibDefs.SUCCESS,
+//      *  },
+//      * };
+//      * next(); // run next to somethingHandler...
+//      */
+//   },
+// );
+// authRouter.post('/somethingPath', somethingFunc, somethingHandler);
 
 authRouter.post('/signIn', signIn);
 authRouter.post('/signUp', signUp);
