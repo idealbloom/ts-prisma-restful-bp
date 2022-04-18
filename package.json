@@ -16,7 +16,8 @@
     "build": "tsc -p .",
     "prepare": "husky install",
     "migrate": "prisma migrate dev",
-    "generate": "prisma generate"
+    "generate": "prisma generate",
+    "test": "cross-env NODE_ENV=test jest --detectOpenHandles --coverage"
   },
   "husky": {
     "hooks": {
@@ -60,14 +61,21 @@
     "@types/axios": "^0.14.0",
     "@types/bcrypt": "^5.0.0",
     "@types/cookie-parser": "^1.4.2",
+    "@types/jest": "^27.4.1",
     "@types/passport": "^1.0.7",
     "@types/passport-local": "^1.0.34",
+    "@types/supertest": "^2.0.12",
     "axios": "^0.26.1",
     "cookie-parser": "^1.4.6",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.0.0",
     "eslint-import-resolver-typescript": "^2.7.1",
     "express": "^4.17.3",
+    "jest": "^27.5.1",
     "lodash": "^4.17.21",
     "passport": "^0.5.2",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "supertest": "^6.2.2",
+    "ts-jest": "^27.1.4"
   }
 }
