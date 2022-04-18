@@ -12,7 +12,7 @@ export interface IBResFormat {
   IBcode: string;
   IBmessage: string;
   IBdetail: string;
-  IBparams: object;
+  IBparams: object | {};
 }
 
 // # 성공
