@@ -8,7 +8,10 @@
             "@src/*": ["src/*"],
         },
         // "strict": true,                           /* Enable all strict type-checking options. */
-        "typeRoots": [ "./src/@types/", "./node_modules/@types"], /* List of folders to include type definitions from. */
+        "typeRoots": [
+            "./src/@types",
+            "./node_modules/@types"
+        ], /* List of folders to include type definitions from. */
         // "sourceMap": true,                     /* Generates corresponding '.map' file. */
         // "rootDir": ".", //루트 폴더
         // "strict": true, //strict 옵션 활성화
@@ -19,6 +22,8 @@
         // "skipLibCheck": true /* Skip type checking of declaration files. */
         "resolveJsonModule" : true,
         // "noImplicitAny": true,                 /* Raise error on expressions and declarations with an implied 'any' type. */
+        // "declaration": true, /* Auto generate xxx.d.ts files for each .ts files */
+        // "declarationDir" : "./src/@types" /* Auto generate xxx.d.ts files for each .ts files */
     },
     "include": ["src/**/*.ts"],
     "exclude": ["node_modules"],

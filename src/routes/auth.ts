@@ -9,12 +9,6 @@ export const signIn = (req: Request, res: Response): void => {
   res.json('this is signIn');
 };
 
-interface ISignUpRequest {
-  email: string;
-  password: string;
-  name: string;
-}
-
 export const signUp = asyncWrapper(async (req: Request, res: Response) => {
   const {
     email = null,
