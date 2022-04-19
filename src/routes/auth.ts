@@ -1,46 +1,56 @@
-import express, { Request, Response } from 'express';
+import express, { Response, Express } from 'express';
 import prisma from '@src/prisma';
 import { ibDefs, asyncWrapper, genBcryptHash } from '@src/utils';
 import _, { isEmpty } from 'lodash';
 
 const authRouter: express.Application = express();
 
-export const signIn = (req: Request, res: Response): void => {
+export const signIn = (
+  req: Express.IBTypedReqBody<{}>,
+  res: Response,
+): void => {
   res.json('this is signIn');
 };
 
-export const signUp = asyncWrapper(async (req: Request, res: Response) => {
-  const {
-    email = null,
-    password = null,
-    name = null,
-  }: ISignUpRequest = req.body as ISignUpRequest;
+export const signUp = asyncWrapper(
+  async (
+    req: Express.IBTypedReqBody<{
+      email: string;
+      password: string;
+      name: string;
+    }>,
+    res: Response,
+  ) => {
+    const {
+      body: { email, password, name },
+    } = req;
 
-  if (isEmpty(email) || isEmpty(password)) {
-    res.status(400).json({ ...ibDefs.INVALIDPARAMS });
-    return;
-  }
+    if (isEmpty(email) || isEmpty(password)) {
+      res.status(400).json({ ...ibDefs.INVALIDPARAMS });
+      return;
+    }
 
-  const hash = genBcryptHash(password);
-  const createdUser = await prisma.user.upsert({
-    where: {
-      email,
-    },
-    update: {},
-    create: {
-      email,
-      password: hash,
-      name,
-    },
-  });
+    const hash = genBcryptHash(password);
+    const createdUser = await prisma.user.upsert({
+      where: {
+        email,
+      },
+      update: {},
+      create: {
+        email,
+        password: hash,
+        name,
+      },
+    });
 
-  const userWithoutPw = _.omit(createdUser, ['password']);
+    const userWithoutPw = _.omit(createdUser, ['password']);
 
-  res.json({
-    ...ibDefs.SUCCESS,
-    IBparams: userWithoutPw,
-  });
-});
+    res.json({
+      ...ibDefs.SUCCESS,
+      IBparams: userWithoutPw,
+    });
+  },
+);
 
 // export const somethingFunc = asyncWrapper(
 //   async (req: Request, res: Response, next: NextFunction) => {

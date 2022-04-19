@@ -15,6 +15,13 @@ export interface IBResFormat {
   IBparams: object | {};
 }
 
+// export interface IBTypedReqBody<T> extends Express.Request {
+//   locals?: {
+//     resMessages: IBResFormat;
+//   };
+//   body: T;
+// }
+
 // # 성공
 // 200 : OK, 요청 정상 처리
 // 201 : Created, 생성 요청 성공

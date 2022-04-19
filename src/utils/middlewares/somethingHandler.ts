@@ -1,7 +1,7 @@
-import { Request, Response } from 'express';
+import { Express, Response } from 'express';
 
 const somethingHandler = (
-  req: Request,
+  req: Express.IBTypedReqBody<{}>,
   res: Response,
   //   next: NextFunction,
 ): void => {
