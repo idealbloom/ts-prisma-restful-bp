@@ -2,16 +2,16 @@ import request from 'supertest';
 import app from '@src/app';
 import prisma from '@src/prisma';
 import { User } from '@prisma/client';
-import { IBResFormat } from '@src/utils';
+import { IBResFormat, ibDefs } from '@src/utils';
 import bcrypt from 'bcrypt';
 
 describe('Auth Express Router E2E Test', () => {
   describe('POST /signIn', () => {
     it('Case: Correct', async () => {
       const response = await request(app).post('/auth/signIn').send();
-      const { body: result } = response;
+      const result: IBResFormat = response.body as IBResFormat;
 
-      expect(result).toEqual('this is signIn');
+      expect(result).toEqual({ ...ibDefs.SUCCESS });
     });
   });
 

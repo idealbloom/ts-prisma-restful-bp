@@ -1,15 +1,17 @@
-import express, { Response, Express } from 'express';
+import express, { Express } from 'express';
 import prisma from '@src/prisma';
-import { ibDefs, asyncWrapper, genBcryptHash } from '@src/utils';
+import { ibDefs, asyncWrapper, genBcryptHash, IBResFormat } from '@src/utils';
 import _, { isEmpty } from 'lodash';
 
 const authRouter: express.Application = express();
 
 export const signIn = (
   req: Express.IBTypedReqBody<{}>,
-  res: Response,
+  res: Express.IBTypedResponse<IBResFormat>,
 ): void => {
-  res.json('this is signIn');
+  res.status(200).json({
+    ...ibDefs.SUCCESS,
+  });
 };
 
 export const signUp = asyncWrapper(
@@ -19,7 +21,7 @@ export const signUp = asyncWrapper(
       password: string;
       name: string;
     }>,
-    res: Response,
+    res: Express.IBTypedResponse<IBResFormat>,
   ) => {
     const {
       body: { email, password, name },
