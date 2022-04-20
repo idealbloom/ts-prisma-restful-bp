@@ -28,10 +28,4 @@ app.get('/', (req: Request, res: Response) => {
 //   console.log(`ts-express Server listening on port: ${process.env.PORT}`);
 // });
 
-if (process.env.NODE_ENV !== 'test') {
-  app.listen(process.env.PORT, () => {
-    console.log(`ts-express Server listening on port: ${process.env.PORT}`);
-  });
-}
-
 export default app;

@@ -2,7 +2,7 @@ module.exports = {
     apps: [
       {
         name: 'ts-prisma-restful-bp',
-        script: 'ts-node -r tsconfig-paths/register ./src/app.ts --watch',
+        script: 'ts-node -r tsconfig-paths/register ./src/server.ts --watch',
         time: true,
         watch: true,
         // TZ: 'Asia/Seoul',
