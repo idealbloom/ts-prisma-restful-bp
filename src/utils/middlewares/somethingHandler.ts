@@ -9,7 +9,7 @@ const somethingHandler = (
     locals: { resMessages },
   } = req;
 
-  if (resMessages) res.json(resMessages);
+  if (resMessages) res.status(200).json(resMessages);
 };
 
 export default somethingHandler;
