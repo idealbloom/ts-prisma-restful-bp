@@ -1,10 +1,12 @@
 import express, { Request, Response } from 'express';
 import cookieParser from 'cookie-parser';
+import morgan from 'morgan';
 import authRouter from './routes/auth';
 
 const app: express.Application = express();
 
 app.use(express.json());
+app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.COOKIE_SECRET || 'default_cookie_secret_16'));
 
