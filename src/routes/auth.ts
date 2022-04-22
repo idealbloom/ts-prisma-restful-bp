@@ -1,17 +1,74 @@
-import express, { Express } from 'express';
+import express, { Express, NextFunction } from 'express';
 import prisma from '@src/prisma';
 import { ibDefs, asyncWrapper, genBcryptHash, IBResFormat } from '@src/utils';
 import _, { isEmpty } from 'lodash';
+import jwt from 'jsonwebtoken';
+import passport from 'passport';
+import { User } from '@prisma/client';
 
 const authRouter: express.Application = express();
 
 export const signIn = (
-  req: Express.IBTypedReqBody<{}>,
+  req: Express.IBTypedReqBody<{ email: string; password: string }>,
   res: Express.IBTypedResponse<IBResFormat>,
+  next: NextFunction,
 ): void => {
-  res.status(200).json({
-    ...ibDefs.SUCCESS,
-  });
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+  passport.authenticate(
+    'local',
+    (err, user: User, info: { message: string }) => {
+      if (err) {
+        next(err);
+        return;
+      }
+      if (!user) {
+        console.log(info);
+        res.status(200).json({
+          ...ibDefs.INVALIDPARAMS,
+          IBdetail: info.message,
+        });
+        return;
+      }
+
+      const randNo = Math.random().toString().substr(2, 6);
+      const accessToken = jwt.sign(
+        { email: user.email, randNo },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: '12h',
+        },
+      );
+
+      // const expiration = 1000;
+      const refreshToken = jwt.sign(
+        { email: user.email, randNo },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: '30d',
+        },
+      );
+
+      // const refreshExpiration = 1000 * 3600 * 24 * 30;
+      // res.cookie('refreshToken', refreshToken, {
+      //   expires: new Date(new Date().getTime() + refreshExpiration),
+      //   httpOnly: true,
+      //   signed: true,
+      //   // secure: true,
+      // });
+
+      res.status(200).json({
+        ...ibDefs.SUCCESS,
+        IBparams: {
+          token: accessToken,
+          refreshToken,
+          userId: user.id,
+          email: user.email,
+        },
+      });
+    },
+  )(req, res, next);
+
+  // return res.status(200).send('hello world');
 };
 
 export const signUp = asyncWrapper(

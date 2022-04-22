@@ -2,44 +2,46 @@ import { PassportStatic } from 'passport';
 import * as passportLocal from 'passport-local';
 import { isEmpty, isNull } from 'lodash';
 import { compare } from 'bcrypt';
-import prisma from '../prisma';
+import { User } from '@prisma/client';
+import prisma from '@src/prisma';
 
 const LocalStrategy = passportLocal.Strategy;
 
+declare type LocalStrategyCBFunc = (
+  error: unknown,
+  user?: User,
+  options?: passportLocal.IVerifyOptions,
+) => void;
 export default (passport: PassportStatic): void => {
   const local = new LocalStrategy(
     {
       usernameField: 'email',
       passwordField: 'password',
     },
-    async (email, password, done): Promise => {
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    async (email, password, done: LocalStrategyCBFunc): Promise<void> => {
       try {
-        const user: {
-          id: number;
-          email: String;
-          password: String;
-          name: String;
-          createdAt: Date;
-          updatedAt: Date;
-        } = await prisma.user.findFirst({
+        const user: User = await prisma.user.findFirst({
           where: {
             email,
           },
         });
 
         if (isEmpty(user) || isNull(user)) {
-          return done(null, false, { message: 'Incorrect username.' });
+          done(null, null, { message: 'Incorrect username.' });
+          return;
         }
         const compareResult: Boolean = await compare(password, user.password);
         if (!compareResult) {
-          return done(null, false, {
+          done(null, null, {
             message: 'Incorrect password.',
           });
+          return;
         }
-        return done(null, user);
+        done(null, user);
       } catch (error) {
         console.error(error);
-        return done(error);
+        done(error);
       }
     },
   );
