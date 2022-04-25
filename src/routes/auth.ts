@@ -1,6 +1,12 @@
 import express, { Express, NextFunction } from 'express';
 import prisma from '@src/prisma';
-import { ibDefs, asyncWrapper, genBcryptHash, IBResFormat } from '@src/utils';
+import {
+  ibDefs,
+  asyncWrapper,
+  genBcryptHash,
+  IBResFormat,
+  accessTokenValidCheck,
+} from '@src/utils';
 import _, { isEmpty } from 'lodash';
 import jwt from 'jsonwebtoken';
 import passport from 'passport';
@@ -138,6 +144,28 @@ export const signUp = asyncWrapper(
   },
 );
 
+export const authGuardTest = (
+  req: Express.IBTypedReqBody<{
+    testParam: string;
+  }>,
+  res: Express.IBTypedResponse<IBResFormat>,
+): void => {
+  const {
+    locals,
+    body: { testParam },
+  } = req;
+
+  console.log(locals);
+
+  res.json({
+    ...ibDefs.SUCCESS,
+    IBparams: {
+      ...locals,
+      testParam,
+    },
+  });
+};
+
 // export const somethingFunc = asyncWrapper(
 //   async (req: Request, res: Response, next: NextFunction) => {
 //     /**
@@ -160,5 +188,6 @@ export const signUp = asyncWrapper(
 
 authRouter.post('/signIn', signIn);
 authRouter.post('/signUp', signUp);
+authRouter.post('/authGuardTest', accessTokenValidCheck, authGuardTest);
 
 export default authRouter;

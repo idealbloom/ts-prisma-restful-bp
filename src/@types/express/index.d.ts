@@ -1,6 +1,7 @@
 // reference https://javascript.plainenglish.io/typed-express-request-and-response-with-typescript-7277aea028c
 import { IBResFormat } from '@src/utils';
 import { Send } from '@types/express-serve-static-core';
+import { User } from '@prisma/client';
 
 export {};
 declare global {
@@ -11,10 +12,14 @@ declare global {
   // }
 
   namespace Express {
-    export interface IBTypedReqBody<T> extends Express.Request {
+    export interface IBAuthGuardRequest extends Express.Request {
       locals?: {
-        resMessages: IBResFormat;
+        user?: User;
+        resMessages?: IBResFormat;
       };
+    }
+
+    export interface IBTypedReqBody<T> extends IBAuthGuardRequest {
       body: T;
     }
 
