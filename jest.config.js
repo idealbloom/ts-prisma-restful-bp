@@ -6,4 +6,11 @@ module.exports = {
   moduleNameMapper: {
     '^@src/(.*)$': '<rootDir>/src/$1',
   },
+  collectCoverageFrom: [ // coverage 영역 지정
+    "./src/**",
+  ],
+  coveragePathIgnorePatterns: [
+    "./node_modules",
+    "./src/@types"
+  ]
 };

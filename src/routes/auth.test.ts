@@ -2,16 +2,49 @@ import request from 'supertest';
 import app from '@src/app';
 import prisma from '@src/prisma';
 import { User } from '@prisma/client';
-import { IBResFormat, ibDefs } from '@src/utils';
+import { ibDefs, IBResFormat } from '@src/utils';
 import bcrypt from 'bcrypt';
 
 describe('Auth Express Router E2E Test', () => {
   describe('POST /signIn', () => {
     it('Case: Correct', async () => {
-      const response = await request(app).post('/auth/signIn').send();
+      const response = await request(app).post('/auth/signIn').send({
+        email: 'hapsody@gmail.com',
+        password: 'qwer1234!',
+      });
       const result: IBResFormat = response.body as IBResFormat;
+      expect(result.IBcode).toEqual({ ...ibDefs.SUCCESS }.IBcode);
+    });
+    it('Case: Incorrect email', async () => {
+      const response = await request(app).post('/auth/signIn').send({
+        email: 'errorAccount@error.test.com',
+        password: 'errorrrrrr',
+      });
+      const result = response.body as IBResFormat;
+      expect(response.statusCode).toEqual(404);
+      expect(result.IBcode).toEqual({ ...ibDefs.NOTEXISTDATA }.IBcode);
+    });
 
-      expect(result).toEqual({ ...ibDefs.SUCCESS });
+    it('Case: Incorrect password', async () => {
+      const response = await request(app).post('/auth/signIn').send({
+        email: 'hapsody@gmail.com',
+        password: 'errorrrrrr',
+      });
+      const result = response.body as IBResFormat;
+      expect(response.statusCode).toEqual(404);
+      expect(result.IBcode).toEqual({ ...ibDefs.NOTMATCHEDDATA }.IBcode);
+    });
+    it('Case: No Params', async () => {
+      const response = await request(app).post('/auth/signIn').send();
+      const result = response.body as IBResFormat;
+      expect(response.statusCode).toEqual(400);
+      expect(result.IBcode).toEqual({ ...ibDefs.INVALIDPARAMS }.IBcode);
+    });
+    it('Case: UNEXPECTED Error', async () => {
+      const response = await request(app).post('/auth/signIn').send();
+      const result = response.body as IBResFormat;
+      expect(response.statusCode).toEqual(400);
+      expect(result.IBcode).toEqual({ ...ibDefs.INVALIDPARAMS }.IBcode);
     });
   });
 
@@ -58,7 +91,7 @@ describe('Auth Express Router E2E Test', () => {
 
       const { IBcode }: IBResFormat = response.body as IBResFormat;
       expect(response.statusCode).toEqual(400);
-      expect(IBcode).toEqual('3001');
+      expect(IBcode).toEqual({ ...ibDefs.INVALIDPARAMS }.IBcode);
 
       inputParams = {
         email: '',
@@ -69,7 +102,7 @@ describe('Auth Express Router E2E Test', () => {
 
       const { IBcode: case2IBcode }: IBResFormat = response.body as IBResFormat;
       expect(response.statusCode).toEqual(400);
-      expect(case2IBcode).toEqual('3001');
+      expect(case2IBcode).toEqual({ ...ibDefs.INVALIDPARAMS }.IBcode);
 
       const invalidCaseParams = {};
       response = await request(app)
@@ -78,7 +111,7 @@ describe('Auth Express Router E2E Test', () => {
 
       const { IBcode: case3IBcode }: IBResFormat = response.body as IBResFormat;
       expect(response.statusCode).toEqual(400);
-      expect(case3IBcode).toEqual('3001');
+      expect(case3IBcode).toEqual({ ...ibDefs.INVALIDPARAMS }.IBcode);
     });
   });
 });

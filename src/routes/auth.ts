@@ -16,17 +16,44 @@ export const signIn = (
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   passport.authenticate(
     'local',
-    (err, user: User, info: { message: string }) => {
+    (err: Error, user: User, info: { message: string }) => {
       if (err) {
+        console.error(err);
+        res.status(500).json({
+          ...ibDefs.UNEXPECTED,
+        });
         next(err);
         return;
       }
       if (!user) {
         console.log(info);
-        res.status(200).json({
-          ...ibDefs.INVALIDPARAMS,
-          IBdetail: info.message,
+        if (info.message === 'Incorrect username.') {
+          res.status(404).json({
+            ...ibDefs.NOTEXISTDATA,
+            IBdetail: info.message,
+          });
+          return;
+        }
+        if (info.message === 'Incorrect password.') {
+          res.status(404).json({
+            ...ibDefs.NOTMATCHEDDATA,
+            IBdetail: info.message,
+          });
+          return;
+        }
+
+        if (info.message === 'Missing credentials') {
+          res.status(400).json({
+            ...ibDefs.INVALIDPARAMS,
+            IBdetail: info.message,
+          });
+          // next();
+          return;
+        }
+        res.status(500).json({
+          ...ibDefs.UNEXPECTED,
         });
+        next();
         return;
       }
 
