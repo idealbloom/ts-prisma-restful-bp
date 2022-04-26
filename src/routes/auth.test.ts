@@ -4,6 +4,7 @@ import prisma from '@src/prisma';
 import { User } from '@prisma/client';
 import { ibDefs, IBResFormat } from '@src/utils';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 describe('Auth Express Router E2E Test', () => {
   describe('POST /signIn', () => {
@@ -112,6 +113,56 @@ describe('Auth Express Router E2E Test', () => {
       const { IBcode: case3IBcode }: IBResFormat = response.body as IBResFormat;
       expect(response.statusCode).toEqual(400);
       expect(case3IBcode).toEqual({ ...ibDefs.INVALIDPARAMS }.IBcode);
+    });
+  });
+
+  describe('POST /authGuardTest', () => {
+    it('Case: Correct', async () => {
+      const inputParams = {
+        testParam: 'test',
+      };
+
+      const randNo = '1234';
+      const accessToken: string = jwt.sign(
+        { email: 'test@gmail.com', randNo },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: '12h',
+        },
+      );
+
+      const response = await request(app)
+        .post('/auth/authGuardTest')
+        .set('Authorization', `Bearer ${accessToken}`)
+        .send(inputParams);
+
+      const { IBcode, IBparams }: IBResFormat = response.body as IBResFormat;
+      expect(IBcode).toEqual('1000');
+      // expect(IBparams).not.toMatch({});
+      expect(IBparams).not.toBeNull();
+    });
+    it('Case: Not Existed email', async () => {
+      const inputParams = {
+        testParam: 'test',
+      };
+
+      const randNo = '1234';
+      const accessToken: string = jwt.sign(
+        { email: 'notexistedemail@gmail.com', randNo },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: '12h',
+        },
+      );
+
+      const response = await request(app)
+        .post('/auth/authGuardTest')
+        .set('Authorization', `Bearer ${accessToken}`)
+        .send(inputParams);
+
+      const { IBcode }: IBResFormat = response.body as IBResFormat;
+      expect(IBcode).toEqual('2001');
+      expect(response.statusCode).toEqual(404);
     });
   });
 });

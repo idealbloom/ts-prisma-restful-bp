@@ -13,7 +13,18 @@ const accessTokenValidCheck = (
     'jwt',
     (authError: Error, user: User, info: { name: string; message: string }) => {
       // console.log(authError, user, info);
-
+      if (authError && authError instanceof Error) {
+        if (authError.message === 'NOTEXISTDATA') {
+          res.status(404).json({
+            ...ibDefs[authError.message],
+          });
+          return;
+        }
+        res.status(500).json({
+          ...ibDefs.UNEXPECTED,
+        });
+        return;
+      }
       if (info && info.name === 'TokenExpiredError') {
         res.status(401).json({
           ...ibDefs.TOKENEXPIRED,
