@@ -2,12 +2,14 @@ import express, { Request, Response } from 'express';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import passport from 'passport';
+import dotenv from 'dotenv';
 import authRouter from './routes/auth';
 
 import passportConfig from './passport';
 
 const app: express.Application = express();
 
+dotenv.config();
 app.use(express.json());
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true }));
