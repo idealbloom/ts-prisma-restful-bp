@@ -1,9 +1,23 @@
 import express, { Request, Response } from 'express';
-import testRouter from './routes/test';
+import cookieParser from 'cookie-parser';
+import morgan from 'morgan';
+import passport from 'passport';
+import authRouter from './routes/auth';
+
+import passportConfig from './passport';
 
 const app: express.Application = express();
 
-app.use('/test', testRouter);
+app.use(express.json());
+app.use(morgan('dev'));
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser(process.env.COOKIE_SECRET || 'default_cookie_secret_16'));
+
+app.use(passport.initialize());
+// app.use(passport.session());
+passportConfig(passport);
+
+app.use('/auth', authRouter);
 
 app.get('/', (req: Request, res: Response) => {
   res.send('hello world!!!');
@@ -17,6 +31,8 @@ app.get('/', (req: Request, res: Response) => {
 //     ]);
 // });
 
-app.listen(process.env.PORT, () => {
-  console.log(`ts-express Server listening on port: ${process.env.PORT}`);
-});
+// app.listen(process.env.PORT, () => {
+//   console.log(`ts-express Server listening on port: ${process.env.PORT}`);
+// });
+
+export default app;
