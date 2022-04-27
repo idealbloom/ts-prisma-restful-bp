@@ -32,7 +32,13 @@ ce43b2497247   mysql     "docker-entrypoint.s…"   10 days ago    Up 10 days   
 ### 3. 서버실행
 
 ```shell
-$ yarn start default dev 모드 실행(= yarn start:dev)
+$ yarn # node_module 설치
+
+$ yarn migrate # prisma model -> db migrationg
+$ yarn generate # prisma/client 스키마 생성
+$ yarn seed # 기본 db data seeding
+
+$ yarn start # default dev 모드 실행(= yarn start:dev)
 ```
 
 ### 4. 서버 재시작 및 중지 명령어
