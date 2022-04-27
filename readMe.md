@@ -24,7 +24,6 @@ ce43b2497247   mysql     "docker-entrypoint.s…"   10 days ago    Up 10 days   
 ### 2. 환경 변수 및 config 파일 복사(개발자 문의 필요: hjkang@idealbloom.io)
 
 - .env
-- /config/xxx.json
 
 .env에는 기본적으로 아래 변수들이 필요합니다.<br> DATABASE_URL <br> SHADOW_DATABASE_URL
 
