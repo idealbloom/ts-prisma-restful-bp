@@ -44,4 +44,9 @@ jobs:
       - run: yarn
 
       # - run: npm run build --if-present
-      - run: npm test
+      - name: test
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          SHADOW_DATABASE_URL: ${{ secrets.SHADOW_DATABASE_URL }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+        run: npm test
