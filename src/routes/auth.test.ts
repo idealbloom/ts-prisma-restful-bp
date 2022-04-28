@@ -125,7 +125,7 @@ describe('Auth Express Router E2E Test', () => {
       const randNo = '1234';
       const accessToken: string = jwt.sign(
         { email: 'test@gmail.com', randNo },
-        process.env.JWT_SECRET,
+        process.env.JWT_SECRET || 'test_secret',
         {
           expiresIn: '12h',
         },
@@ -149,7 +149,7 @@ describe('Auth Express Router E2E Test', () => {
       const randNo = '1234';
       const accessToken: string = jwt.sign(
         { email: 'notexistedemail@gmail.com', randNo },
-        process.env.JWT_SECRET,
+        process.env.JWT_SECRET || 'test_secret',
         {
           expiresIn: '12h',
         },
