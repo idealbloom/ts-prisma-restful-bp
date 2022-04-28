@@ -2,24 +2,24 @@ import express, { Request, Response } from 'express';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import passport from 'passport';
+import compression from 'compression';
 import authRouter from './routes/auth';
-// import compression from 'compression';
 
 import passportConfig from './passport';
 
 const app: express.Application = express();
 
-// function shouldCompress (req, res) {
-//   if (req.headers['x-no-compression']) {
-//     // don't compress responses with this request header
-//     return false
-//   }
+function shouldCompress(req: Request, res: Response) {
+  if (req.headers['x-no-compression']) {
+    // don't compress responses with this request header
+    return false;
+  }
 
-//   // fallback to standard filter function
-//   return compression.filter(req, res)
-// }
+  // fallback to standard filter function
+  return compression.filter(req, res);
+}
 
-// app.use(compression({ filter: shouldCompress }))
+app.use(compression({ filter: shouldCompress }));
 app.use(express.json());
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true }));
