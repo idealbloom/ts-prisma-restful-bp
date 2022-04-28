@@ -41,18 +41,13 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - name: Install modules
-        run: yarn
-      - name: Set up Prisma migration and generate
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          SHADOW_DATABASE_URL: ${{ secrets.SHADOW_DATABASE_URL }}
-        run: yarn migrate; yarn generate; yarn seed
-
-      # - run: npm run build --if-present
-      - name: test
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           SHADOW_DATABASE_URL: ${{ secrets.SHADOW_DATABASE_URL }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
-        run: npm test
+      - run: yarn
+      - run: |
+          yarn migrate
+          yarn generate
+          yarn seed
+      - run: yarn test
