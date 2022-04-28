@@ -45,9 +45,9 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           SHADOW_DATABASE_URL: ${{ secrets.SHADOW_DATABASE_URL }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
-      - run: yarn
-      - run: |
+        run: yarn
+        run: |
           yarn migrate
           yarn generate
           yarn seed
-      - run: yarn test
+        run: yarn test
