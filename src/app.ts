@@ -3,6 +3,7 @@ import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import passport from 'passport';
 import compression from 'compression';
+import dotenv from 'dotenv';
 import authRouter from './routes/auth';
 
 import passportConfig from './passport';
@@ -20,6 +21,7 @@ function shouldCompress(req: Request, res: Response) {
 }
 
 app.use(compression({ filter: shouldCompress }));
+dotenv.config();
 app.use(express.json());
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true }));
