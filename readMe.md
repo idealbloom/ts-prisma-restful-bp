@@ -41,22 +41,10 @@ SHADOW_DATABASE_URL="mysql://idealbloom:idealbloom1@localhost:<b>xxxx</b>/shadow
 JWT_SECRET=new_password_xxxx
 ```
 
-- node 프로젝트 name 수정
-
-```json
-# package.json
-{
-    "name": "myNewProject", // <== 수정
-    "version": "1.0.0",
-    "main": "index.js",
-    "author": "hjkangIB <hjkang@idealbloom.io>",
-    // ...중략...//
-}
-```
-
 - process manager(pm2) process name 변경
 
 ```javascript
+// ecosystem.config.js
 module.exports = {
     apps: [
       {
@@ -67,6 +55,25 @@ module.exports = {
         ...
 }
 
+```
+
+- node 프로젝트 name 수정
+
+```json
+// package.json
+{
+    "name": "myNewProject", // <== 수정
+    "version": "1.0.0",
+    "main": "index.js",
+    "author": "hjkangIB <hjkang@idealbloom.io>",
+    // ...중략...//
+
+    "scripts": {
+        "start": "yarn start:dev",
+        "stop": "pm2 delete $(exec pm2 list | awk '/pineappleHomePage/ {print $2}')", // <== awk '/<customized_name>/ {print $2}' 수정(ecosystem.config.js 에 기입한 name과 동일하게 수정합니다.)
+        "restart": "yarn stop; yarn start",
+        // ... 중략 ... //
+}
 ```
 
 ### 3. MySQL docker setting
