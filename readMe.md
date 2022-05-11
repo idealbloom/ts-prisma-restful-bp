@@ -11,7 +11,65 @@
 
 # How to run
 
-### 1. MySQL docker setting
+### 1. 환경 변수 및 config 파일 복사(개발자 문의 필요: hjkang@idealbloom.io)
+
+- .env
+
+.env에는 기본적으로 아래 변수들이 필요합니다.<br> DATABASE_URL <br> SHADOW_DATABASE_URL
+
+> ex) <br>DATABASE_URL="mysql://idealbloom:idealbloom1@localhost:3322/myApi?schema=public" SHADOW_DATABASE_URL="mysql://idealbloom:idealbloom1@localhost:3322/shadowdb"
+
+### 2. Project Customizing
+
+보일러 플레이트를 클론한 후 설정값들 중 일부를(ex DB Name, api process name, ...) 사용하려고 하는 프로젝트의 값들로 바꿔줍니다.
+
+- Docker DB volume 설정 변경
+
+```yml
+# docker-compose.yml
+MYSQL_DATABASE: customized_name
+ports:
+  - xxxx:3306
+```
+
+- .env DATABASE_URL, SHADOW_DATABASE_URL 등을 수정해줍니다.
+
+```
+DATABASE_URL="mysql://idealbloom:idealbloom1@localhost:<b>xxxx/customized_name</b>"
+SHADOW_DATABASE_URL="mysql://idealbloom:idealbloom1@localhost:<b>xxxx</b>/shadowdb"
+
+JWT_SECRET=new_password_xxxx
+```
+
+- node 프로젝트 name 수정
+
+```json
+# package.json
+{
+    "name": "myNewProject", // <== 수정
+    "version": "1.0.0",
+    "main": "index.js",
+    "author": "hjkangIB <hjkang@idealbloom.io>",
+    // ...중략...//
+}
+```
+
+- process manager(pm2) process name 변경
+
+```javascript
+module.exports = {
+    apps: [
+      {
+        name: 'myNewProject',// <== 수정
+        script: 'ts-node -r tsconfig-paths/register ./src/server.ts --watch',
+        time: true,
+        watch: true,
+        ...
+}
+
+```
+
+### 3. MySQL docker setting
 
 ```shell
 $ docker-compose up -d
@@ -21,15 +79,7 @@ CONTAINER ID   IMAGE     COMMAND                  CREATED        STATUS       PO
 ce43b2497247   mysql     "docker-entrypoint.s…"   10 days ago    Up 10 days   33060/tcp, 0.0.0.0:3322->3306/tcp   ts-prisma-boilerplate_mysql_1
 ```
 
-### 2. 환경 변수 및 config 파일 복사(개발자 문의 필요: hjkang@idealbloom.io)
-
-- .env
-
-.env에는 기본적으로 아래 변수들이 필요합니다.<br> DATABASE_URL <br> SHADOW_DATABASE_URL
-
-> ex) <br>DATABASE_URL="mysql://idealbloom:idealbloom1@localhost:3322/myApi?schema=public" SHADOW_DATABASE_URL="mysql://idealbloom:idealbloom1@localhost:3322/shadowdb"
-
-### 3. 서버실행
+### 4. 서버실행
 
 ```shell
 $ yarn # node_module 설치
@@ -41,7 +91,7 @@ $ yarn seed # 기본 db data seeding
 $ yarn start # default dev 모드 실행(= yarn start:dev)
 ```
 
-### 4. 서버 재시작 및 중지 명령어
+### 5. 서버 재시작 및 중지 명령어
 
 ```shell
 $ yarn restart
