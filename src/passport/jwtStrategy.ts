@@ -41,6 +41,7 @@ export default (passport: PassportStatic): void => {
 
         if (user) {
           done(null, user);
+          return;
         }
         done(new Error('NOTEXISTDATA'));
         // done(null, false, { reason: 'Invalid or Non authentication data' });
