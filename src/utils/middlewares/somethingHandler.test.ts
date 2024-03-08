@@ -10,7 +10,7 @@ describe('somethingHandler E2E Test', () => {
     it('Case: normal', async () => {
       expect.assertions(3);
       const asyncTestFunc = async (
-        req: Express.IBTypedReqBody<{}>,
+        req: Express.IBTypedReqBody<Express.IBAuthGuardRequest>,
         res: Express.Response,
         next: NextFunction,
       ) => {

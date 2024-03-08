@@ -1,7 +1,7 @@
 import { Express, Response } from 'express';
 
 const somethingHandler = (
-  req: Express.IBTypedReqBody<{}>,
+  req: Express.IBTypedReqBody<Express.IBAuthGuardRequest>,
   res: Response,
   //   next: NextFunction,
 ): void => {

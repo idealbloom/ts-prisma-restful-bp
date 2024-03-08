@@ -12,7 +12,7 @@ export interface IBResFormat {
   IBcode: string;
   IBmessage: string;
   IBdetail: string;
-  IBparams: object | {};
+  IBparams: object;
 }
 
 // export interface IBTypedReqBody<T> extends Express.Request {

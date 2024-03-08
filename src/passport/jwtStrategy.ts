@@ -29,7 +29,7 @@ export default (passport: PassportStatic): void => {
       {
         // jwtFromRequest: ExtractJwt.fromHeader('Authorization'),
         jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-        secretOrKey: process.env.JWT_SECRET,
+        secretOrKey: process.env.JWT_SECRET as string,
       },
       wrapper(async (jwtPayload: unknown, done: VerifiedCallback) => {
         // try {

@@ -31,7 +31,7 @@ export default (passport: PassportStatic): void => {
           done(null, undefined, { message: 'Incorrect username.' });
           return;
         }
-        const compareResult: Boolean = await compare(password, user.password);
+        const compareResult: boolean = await compare(password, user.password);
         if (!compareResult) {
           done(null, undefined, {
             message: 'Incorrect password.',
